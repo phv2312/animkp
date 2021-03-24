@@ -20,16 +20,16 @@ import torch.optim
 import torch.utils.data
 import torch.utils.data.distributed
 
-import models
-import dataset
-from config import cfg
-from lib.utils.utils import create_logger
-from lib.utils.transforms import get_affine_transform, flip_back, affine_transform
-from lib.core.inference import get_final_preds, get_max_preds
+from pose_estimator.lib import models
+from pose_estimator.lib import dataset
+from pose_estimator.lib.config import cfg
+from pose_estimator.lib.utils.utils import create_logger
+from pose_estimator.lib.utils.transforms import get_affine_transform, flip_back, affine_transform
+from pose_estimator.lib.core.inference import get_final_preds, get_max_preds
 
 
-from wrapper.pose_anime.pose_anime_utils import FakedArugmentPasser, _update_config, heatmap2image, draw_kp_w_im, crop_bbox, read_image, imgshow
-from wrapper.pose_anime.constants import joint_labels_dct, joint_labels, joint_pair, flip_pairs
+from pose_estimator.wrapper.pose_anime.pose_anime_utils import FakedArugmentPasser, _update_config, heatmap2image, draw_kp_w_im, crop_bbox, read_image, imgshow
+from pose_estimator.wrapper.pose_anime.constants import joint_labels_dct, joint_labels, joint_pair, flip_pairs
 
 class PoseAnimeInference:
     def __init__(self, config_path, weight_path, use_gpu=True):
@@ -227,7 +227,7 @@ def test_single(im_path, from_geek=True):
 
     pose_model = PoseAnimeInference(config_path, weight_path, use_gpu=True)
     if from_geek:
-        np_image = crop_bbox(read_image(im_path)) # for geek only
+        np_image, rect = crop_bbox(read_image(im_path)) # for geek only
     else:
         np_image = read_image(im_path)
 
