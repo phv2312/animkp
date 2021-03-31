@@ -40,9 +40,6 @@ class PoseAnimeInference:
             cfg, self.args.cfg, 'valid'
         )
 
-        self.logger.info(pprint.pformat(self.args))
-        self.logger.info(cfg)
-
         # cudnn related setting
         cudnn.benchmark = cfg.CUDNN.BENCHMARK
         torch.backends.cudnn.deterministic = cfg.CUDNN.DETERMINISTIC
