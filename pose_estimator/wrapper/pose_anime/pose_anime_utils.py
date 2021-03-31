@@ -42,7 +42,7 @@ def heatmap2image(heatmap):
     return cv2.applyColorMap(heatmap_, cv2.COLORMAP_JET)
 
 def read_image(im_path):
-    return np.asarray(Image.open(im_path))
+    return np.asarray(Image.open(im_path).convert('RGB'))
 
 def __simple_crop_image_by_color(np_image):
     b, r, g = cv2.split(np_image)
