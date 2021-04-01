@@ -191,7 +191,7 @@ class PoseAnimeInference:
         vis_image = np.concatenate([im_w_kp] + vis_image_w_hms, axis=1)
         return results_dct, vis_image
 
-def test_dir(input_dir, output_dir, from_geek=True):
+def test_dir(input_dir, output_dir, from_g=True):
     os.makedirs(output_dir, exist_ok=True)
     assert os.path.isdir(input_dir), 'dir %s not existed ...' % input_dir
 
@@ -205,8 +205,8 @@ def test_dir(input_dir, output_dir, from_geek=True):
         print ('processing %s ...' % im_path)
         bname = os.path.basename(im_path)
 
-        if from_geek:
-            np_image = crop_bbox(read_image(im_path))  # for geek only
+        if from_g:
+            np_image = crop_bbox(read_image(im_path))  # for g only
         else:
             np_image = read_image(im_path)
 
@@ -216,15 +216,15 @@ def test_dir(input_dir, output_dir, from_geek=True):
         output_path = os.path.join(output_dir, bname)
         cv2.imwrite(output_path, cv2.cvtColor(vis_image, cv2.COLOR_BGR2RGB))
 
-def test_single(im_path, from_geek=True):
+def test_single(im_path, from_g=True):
     assert os.path.exists(im_path), 'file %s not existed ...' % im_path
 
-    config_path = "/home/kan/Desktop/cinnamon/kp_estimation/keypoint_estimation/experiments/hor01/hrnet/w48_384x288_adam_lr1e-3.yaml"
-    weight_path = "/home/kan/Desktop/model_best.pth"
+    config_path = ""
+    weight_path = ""
 
     pose_model = PoseAnimeInference(config_path, weight_path, use_gpu=True)
-    if from_geek:
-        np_image, rect = crop_bbox(read_image(im_path)) # for geek only
+    if from_g:
+        np_image, rect = crop_bbox(read_image(im_path)) # for g only
     else:
         np_image = read_image(im_path)
 
@@ -232,13 +232,4 @@ def test_single(im_path, from_geek=True):
     imgshow(vis_image)
 
 if __name__ == '__main__':
-
-    if True:
-        input_path = "/home/kan/Desktop/cinnamon/prj_geektoys_interpolation/data/images_only/A0001.png"
-        test_single(input_path, from_geek=True)
-
-    if False:
-        input_dir = "/home/kan/Desktop/stuff/goku/cloth/goku_coiao"
-        output_dir = "/home/kan/Desktop/stuff/goku/cloth/goku_coiao/output_kp_1st"
-
-        test_dir(input_dir, output_dir, from_geek=False)
+    pass
