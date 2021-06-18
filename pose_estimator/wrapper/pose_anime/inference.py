@@ -36,10 +36,6 @@ class PoseAnimeInference:
         self.args = FakedArugmentPasser(config_path, weight_path)
         _update_config(cfg, self.args)
 
-        self.logger, self.final_output_dir, self.tb_log_dir = create_logger(
-            cfg, self.args.cfg, 'valid'
-        )
-
         # cudnn related setting
         cudnn.benchmark = cfg.CUDNN.BENCHMARK
         torch.backends.cudnn.deterministic = cfg.CUDNN.DETERMINISTIC
@@ -58,7 +54,6 @@ class PoseAnimeInference:
         else:
             print('>>> Enable GPU')
 
-        self.logger.info('=> loading model from {}'.format(cfg.TEST.MODEL_FILE))
         self.model.load_state_dict(torch.load(cfg.TEST.MODEL_FILE), strict=True)
         self.model = self.model.to(self.device)
         self.model.eval()
