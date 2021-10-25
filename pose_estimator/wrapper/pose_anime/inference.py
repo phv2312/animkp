@@ -49,10 +49,6 @@ class PoseAnimeInference:
         )
 
         self.device = torch.device('cuda' if use_gpu and torch.cuda.is_available() else 'cpu')
-#         if use_gpu and not torch.cuda.is_available():
-#             print('>>> Enable GPU but <NO GPU FOUND>. Turn into cpu instead ...')
-#         else:
-#             print('>>> Enable GPU')
 
         self.model.load_state_dict(torch.load(cfg.TEST.MODEL_FILE), strict=True)
         self.model = self.model.to(self.device)
