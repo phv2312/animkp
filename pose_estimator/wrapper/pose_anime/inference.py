@@ -50,7 +50,7 @@ class PoseAnimeInference:
 
         self.device = torch.device('cuda' if use_gpu and torch.cuda.is_available() else 'cpu')
 
-        self.model.load_state_dict(torch.load(cfg.TEST.MODEL_FILE), strict=True)
+        self.model.load_state_dict(torch.load(cfg.TEST.MODEL_FILE, map_location='cpu'))
         self.model = self.model.to(self.device)
         self.model.eval()
 
